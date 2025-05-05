@@ -68,4 +68,4 @@ npm run dev
 ## 🔗 참고 링크
 
 - [GitHub Projects 보드](https://github.com/jang1071/teamlog/projects)
-- [Notion 기능 명세서](https://example.notion.site/) *(링크는 필요 시 교체하세요)*
+- [Notion 기능 명세서](https://www.notion.so/1ea308a3731d808cb848dfadb85d0b36?v=1ea308a3731d80a0a3e6000cb54f02ea&p=1ea308a3731d80aeb639f6b4935e6862&pm=s)
