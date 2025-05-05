@@ -2,13 +2,15 @@ Spring Boot + React 기반 웹 서비스
 
 ## 프로젝트 구조
 
+<pre><code>```text teamlog/ ├── backend/ # Spring Boot API 서버 ├── frontend/ # React 프론트엔드 ```</code></pre>
+
+```text teamlog/ 
+├── backend/ # Spring Boot API 서버
+├── frontend/ # React 프론트엔드 ```
+
 teamlog/
 ├── backend/ # Spring Boot API 서버
 ├── frontend/ # React 프론트엔드
-
-markdown
-복사
-편집
 
 ## 주요 기능
 - 사용자 회원가입 / 로그인 (JWT 인증)
