@@ -1,11 +1,33 @@
-# TeamLog
+Spring Boot + React 기반 웹 서비스
 
-Spring Boot + React 기반 포트폴리오 프로젝트
+## 프로젝트 구조
 
-## 구조
-- `/backend`: Spring Boot 기반 백엔드
-- `/frontend`: React 기반 프론트엔드 (예정)
+teamlog/
+├── backend/ # Spring Boot API 서버
+├── frontend/ # React 프론트엔드
+
+markdown
+복사
+편집
 
 ## 주요 기능
-- 사용자 회원가입 / 로그인 (JWT 기반)
-- 사용자 정보 관리
+- 사용자 회원가입 / 로그인 (JWT 인증)
+- 비밀번호 암호화 (BCrypt)
+- 사용자 권한(Role) 기반 처리
+- (예정) 글 작성 및 댓글 기능
+
+## 사용 기술 스택
+
+### Backend
+- Java 17
+- Spring Boot 3.x
+- Spring Security
+- JPA + H2 / MySQL
+- JWT (JJWT 라이브러리)
+
+### Frontend (예정)
+- React
+- Vite
+- Axios
+- Tailwind CSS
+
