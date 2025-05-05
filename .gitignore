@@ -1,0 +1,18 @@
+# 백엔드 (Java/Spring)
+*.class
+*.jar
+*.war
+*.log
+target/
+.idea/
+*.iml
+
+# 프론트엔드 (React)
+node_modules/
+dist/
+build/
+.env
+.vscode/
+
+# 공통
+.DS_Store
