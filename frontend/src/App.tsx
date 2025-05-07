@@ -1,7 +1,10 @@
 import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import UserInfoPage from './pages/UserInfoPage';
+import './index.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,19 +18,23 @@ function App() {
   }, []);
 
   // 🔥 로그아웃 함수
-  const handleLoout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
   };
 
   return (
-    <div className="App">
-      {!isLoggedIn ? (
-        <LoginPage onLoginSuccess={() => setIsLoggedIn(true)} />
-      ) : (
-        <UserInfoPage onLogout={handleLoout} />
-      )}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/login"
+          element={<LoginPage onLoginSuccess={() => setIsLoggedIn(true)} />}
+        />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/mypage" element={isLoggedIn ? (<UserInfoPage onLogout={handleLogout} />) : (<Navigate to="/login" replace />)}/>
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
