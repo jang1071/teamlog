@@ -1,6 +1,15 @@
-# TeamLog
+# 📝 TeamLog - 팀 협업 로그 웹 애플리케이션
 
-Spring Boot + React 기반 웹 서비스 (포트폴리오 프로젝트)
+**TeamLog**는 개발자들을 위한 팀 기반 협업 기록 시스템입니다.  
+React와 Spring Boot를 활용하여 JWT 기반 인증 시스템을 구현하였으며,  
+팀 생성, 게시글 작성, 마이페이지 등 실무에서 사용할 수 있는 기능을 제공합니다.
+
+---
+
+## 🎯 프로젝트 목적
+
+TeamLog는 “실제 실무에서 바로 사용할 수 있는 개발자용 협업 로그 시스템”을 목표로 기획되었으며,  
+인증/보안/사용자 역할 관리/REST API 설계 등 풀스택 개발 역량을 집중적으로 담고 있습니다.
 
 ---
 
@@ -14,30 +23,66 @@ teamlog/
 
 ---
 
-## 🔑 주요 기능
+## 🚀 구현 기능 (진행 상태 포함)
 
-- 사용자 회원가입 / 로그인 (JWT 인증)
-- 비밀번호 암호화 (BCrypt)
-- 사용자 권한(Role) 기반 인증
-- (예정) 글 작성 및 댓글 기능
+- ✅ 회원가입 / 로그인 (JWT 기반)
+- ✅ accessToken / refreshToken 분리 발급
+- ✅ JWT 인증 필터 적용 (Spring Security)
+- ✅ refreshToken 기반 accessToken 자동 재발급
+- ✅ 로그인 후 마이페이지 (`/mypage`) 사용자 정보 표시
+- ✅ Axios Interceptor를 통한 401 자동 처리
+- 🟡 팀 생성 / 참여 기능 (`/teams`) [구현 예정]
+- 🟡 팀 게시판 및 게시글/댓글 등록 (`/posts`) [예정]
+- 🟡 Swagger API 문서 자동화 [예정]
+- 🟡 사용자 권한(Role) 기반 접근 제한 (`@PreAuthorize`) [예정]
+- 🟡 예외 처리 및 만료 토큰 대응 메시지 출력 [예정]
 
 ---
 
-## ⚙️ 사용 기술 스택
+## 🖥️ 프로젝트 화면 구성
 
-### ✅ Backend
+| 경로 | 설명 |
+|------|------|
+| `/` | 홈 화면 (서비스 소개, CTA 버튼) |
+| `/register` | 회원가입 |
+| `/login` | 로그인 |
+| `/mypage` | 로그인된 사용자 정보 확인 |
+| `/teams` | 팀 목록 / 팀 생성 (예정) |
+| `/teams/:id` | 팀 상세 페이지 (예정) |
+| `/posts/:id` | 게시글 상세 페이지 (예정) |
+
+
+---
+
+## 🧩 기술 스택
+
+### 📌 Backend
 - Java 17
 - Spring Boot 3.x
-- Spring Security
-- JPA (Hibernate)
-- H2 / MySQL
-- JWT (JJWT 라이브러리)
+- Spring Security + JWT (JJWT)
+- Spring Data JPA + Hibernate
+- MySQL
+- Maven
 
-### 🎨 Frontend (예정)
-- React
-- Vite
-- Axios
+### 📌 Frontend
+- React + Vite
+- TypeScript
 - Tailwind CSS
+- Axios
+- React Router
+
+---
+
+## 💻 개발 환경 및 사용 도구
+
+- IDE:  
+  - **Frontend**: VSCode  
+  - **Backend**: IntelliJ IDEA
+
+- 기타 툴:  
+  - Postman (API 테스트)  
+  - Git + GitHub (버전 관리)  
+  - DALL·E & ChatGPT (디자인 시안 도출)
 
 ---
 
@@ -58,10 +103,13 @@ npm run dev
 
 ---
 
-## 🗂️ 프로젝트 목적
+## 📌 향후 확장 예정 기능
 
-이 프로젝트는 취업을 위한 포트폴리오용으로 개발되었으며,  
-로그인 인증 흐름(JWT 기반)과 사용자 권한 설계를 중심으로 학습 목적을 포함합니다.
+- 팀별 채널 기능
+- Markdown 기반 게시글 작성
+- 실시간 알림 기능 (WebSocket)
+- OAuth2 기반 소셜 로그인 (GitHub / Google)
+- CI/CD 파이프라인 연동 (GitHub Actions)
 
 ---
 
