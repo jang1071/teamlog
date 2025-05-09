@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from "./api/axiosConfig";
+import { useNavigate } from 'react-router-dom';
 
 // 🔹 props 타입 정의
 type LoginPageProps = {
@@ -11,23 +12,38 @@ const LoginPage = ({ onLoginSuccess }: LoginPageProps) => {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
+  const navigate = useNavigate(); // ✅ navigate 함수 선언
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', {
+      // const response = await axios.post('http://localhost:8080/api/auth/login', {
+      //   email,
+      //   password,
+      // });
+
+      // ✅ axios → api 변경 (baseURL 자동 적용됨)
+      const response = await api.post('/api/auth/login', {
         email,
         password,
       });
 
-      const token = response.data.token;
-      console.log('✅ 받은 JWT 토큰:', token);
+
+      const accessToken = response.data.accessToken;
+      console.log('✅ 받은 JWT accessToken 토큰:', accessToken);
+
+      const refreshToken = response.data.refreshToken;
+      console.log('✅ 받은 JWT refreshToken 토큰:', refreshToken);
 
       // 🔥 토큰 저장
-      localStorage.setItem('token', token);
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+
 
       // 🔥 상위(App.tsx)에 로그인 성공 알림
       onLoginSuccess();
+      navigate("/mypage");
     } catch (error) {
       console.error('❌ 로그인 실패:', error);
       alert('이메일 또는 비밀번호가 올바르지 않습니다.');

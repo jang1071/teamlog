@@ -1,51 +1,91 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import api from "./api/axiosConfig";
 
 type Props = {
-  onLogout: () => void; // 🔥 로그아웃 props
+  onLogout: () => void;
 };
 
-const UserInfoPage = ({ onLogout }: Props) => {
-  const [user, setUser] = useState<{ id: number; email: string; role: string } | null>(null);
-  const [error, setError] = useState('');
+type UserInfo = {
+  email: string;
+  role: string;
+};
+
+function UserInfoPage({ onLogout }: Props) {
+  const [user, setUser] = useState<UserInfo | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setError('로그인이 필요합니다.');
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      alert("로그인이 필요합니다.");
+      onLogout();
       return;
     }
 
-    axios
-      .get('http://localhost:8080/api/users/my', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => {
-        setError('사용자 정보를 불러오지 못했습니다.');
-        console.error(err);
+    api.get("/api/users/my") // ✅ baseURL 생략, 토큰 자동 포함
+        .then((res) => setUser(res.data))
+        .catch((err) => {
+          console.error("❌ 사용자 정보 조회 실패:", err);
+          alert("로그인이 만료되었거나 잘못된 토큰입니다.");
+          onLogout();
       });
   }, []);
 
-  if (error) return <div>{error}</div>;
-  if (!user) return <div>사용자 정보를 불러오는 중...</div>;
-
   return (
-    <div style={{ padding: 40 }}>
-      <h2>내 정보</h2>
-      <p>ID: {user.id}</p>
-      <p>Email: {user.email}</p>
-      <p>Role: {user.role}</p>
-      {/* 🔥 로그아웃 버튼 */}
-      <button onClick={onLogout} style={{ marginTop: 20 }}>
-        로그아웃
-      </button>
+    <div style={styles.wrapper}>
+      <div style={styles.card}>
+        <h2 style={styles.title}>마이페이지</h2>
+        {user ? (
+          <>
+            <p>이메일: {user.email}</p>
+            <p>권한: {user.role}</p>
+            <button onClick={onLogout} style={styles.logoutButton}>
+              로그아웃
+            </button>
+          </>
+        ) : (
+          <p>불러오는 중...</p>
+        )}
+      </div>
     </div>
   );
+}
+
+const styles: { [key: string]: React.CSSProperties } = {
+  wrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingTop: "100px",
+    backgroundColor: "#ffffff",
+    height: "100vh",
+    width: "100%",
+  },
+  card: {
+    backgroundColor: "#ffffff",
+    padding: "40px 30px",
+    border: "1px solid #ddd",
+    borderRadius: 8,
+    width: "600px",
+    boxSizing: "border-box",
+    textAlign: "left",
+  },
+  title: {
+    fontSize: 24,
+    color: "#03c75a",
+    fontWeight: "bold",
+    marginBottom: 24,
+  },
+  logoutButton: {
+    marginTop: 20,
+    padding: "12px",
+    backgroundColor: "#e53935",
+    color: "#fff",
+    border: "none",
+    borderRadius: 4,
+    fontWeight: "bold",
+    cursor: "pointer",
+    fontSize: 14,
+  },
 };
 
 export default UserInfoPage;
