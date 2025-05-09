@@ -1,6 +1,7 @@
 package com.teamlog.backend.config;
 
 import com.teamlog.backend.sercurity.JwtAuthenticationFilter;
+import com.teamlog.backend.sercurity.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ public class SecurityConfig {
 
     // 🔐 우리가 만든 JWT 필터를 주입받음
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     // ✅ Spring Security 필터 체인 설정
     @Bean
@@ -47,8 +49,16 @@ public class SecurityConfig {
                         // 로그인, 회원가입 등의 경로는 인증 없이 허용
                         .requestMatchers("/api/auth/**").permitAll()
 
+                        // Swagger UI 관련 경로 허용
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
                         // 그 외의 요청은 인증 필요
                         .anyRequest().authenticated()
+                )
+
+                // 4️⃣ 인증 실패 핸들러 등록
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
 
                 // 4️⃣ UsernamePasswordAuthenticationFilter 전에 JWT 필터를 등록
