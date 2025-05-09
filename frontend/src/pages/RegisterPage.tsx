@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from "./api/axiosConfig";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -24,12 +24,12 @@ const RegisterPage = () => {
     }
 
     try {
-      await axios.post('/api/auth/register', {
+      await api.post("/api/auth/register", {
         email,
         password,
       });
-
-      alert('회원가입이 완료되었습니다!');
+   
+      alert("회원가입이 완료되었습니다. 로그인해주세요.");
       navigate('/login');
     } catch (err: any) {
       setError(err.response?.data?.message || '회원가입 실패');

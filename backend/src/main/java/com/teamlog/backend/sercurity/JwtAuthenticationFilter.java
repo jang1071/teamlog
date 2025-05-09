@@ -6,12 +6,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 // ✅ 사용자 인증 필터 (모든 요청에 대해 1번만 실행됨)
 @Component
@@ -35,16 +37,20 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
             // 4️⃣ 토큰이 유효한지 검증
             if(jwtTokenProvider.validateToken(token)) {
                 // 5️⃣ 토큰에서 사용자 이메일(subject) 추출
-                String userEmail = jwtTokenProvider.getUsernameFromToke(token);
+                String userEmail = jwtTokenProvider.getUsernameFromToken(token);
 
                 // 6️⃣ 인증 객체 생성 (우리는 로그인 시 Role 없이 간단하게 처리)
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userEmail, null, null);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userEmail, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
 
                 // 7️⃣ 인증 정보에 요청 세부정보 추가
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 // 8️⃣ Spring Security의 SecurityContext에 인증 정보 등록
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                // ⛔ 토큰이 유효하지 않은 경우: 401 Unauthorized 응답 반환
+                // response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효하지 않은 JWT 토큰입니다.");
+                // return;
             }
         }
 

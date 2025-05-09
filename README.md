@@ -33,7 +33,7 @@ teamlog/
 - ✅ Axios Interceptor를 통한 401 자동 처리
 - 🟡 팀 생성 / 참여 기능 (`/teams`) [구현 예정]
 - 🟡 팀 게시판 및 게시글/댓글 등록 (`/posts`) [예정]
-- 🟡 Swagger API 문서 자동화 [예정]
+- ✅ Swagger API 문서 자동화
 - 🟡 사용자 권한(Role) 기반 접근 제한 (`@PreAuthorize`) [예정]
 - 🟡 예외 처리 및 만료 토큰 대응 메시지 출력 [예정]
 
@@ -113,7 +113,30 @@ npm run dev
 
 ---
 
+## 📚 API 문서 (Swagger UI)
+
+- 백엔드에서 자동 생성되는 Swagger UI를 통해 전체 API 문서를 확인할 수 있습니다.
+
+- JWT 토큰 기반 인증이 필요한 요청도 Swagger UI의 Authorize 버튼으로 테스트 가능합니다.
+
+---
+
+## Swagger UI 경로
+```bash
+http://localhost:8080/swagger-ui.html
+```
+---
+
+## Postman 자동화 테스트
+
+- teamlog-jwt-test.postman_collection.json 컬렉션 제공
+- 로그인, 인증, 토큰 재발급, 마이페이지 흐름까지 자동화된 테스트 지원
+
+---
+
 ## 🔗 참고 링크
 
 - [GitHub Projects 보드](https://github.com/jang1071/teamlog/projects)
 - [Notion 기능 명세서](https://www.notion.so/1ea308a3731d808cb848dfadb85d0b36?v=1ea308a3731d80a0a3e6000cb54f02ea&p=1ea308a3731d80aeb639f6b4935e6862&pm=s)
+
+

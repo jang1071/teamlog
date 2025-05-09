@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/teamlog?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+# JWT 관련 설정
+jwt:
+  secret: W1l6VFE6UEReL1lvaS12RDBzU3BbUUtle3wwOUxuIn8/QUZdKS1ic2RkfX1ARzZBIGA0W29vXFclVy1CQmVldHY3KA==
+
+# Swagger 설정 (SpringDoc OpenAPI 기준)
+#springdoc:
+#  api-docs:
+#    path: /api-docs
+#  swagger-ui:
+#    path: /swagger-ui.html
+#    operations-sorter: method
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+
+logging:
+  level:
+    org.springdoc: TRACE  # 최상세 로깅
+    org.springdoc.core: DEBUG
